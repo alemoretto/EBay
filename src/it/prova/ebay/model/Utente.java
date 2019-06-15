@@ -17,8 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import it.prova.ebay.model.Ruolo;
-
 @Entity
 public class Utente {
 
@@ -29,7 +27,7 @@ public class Utente {
 	private String cognome;
 	private String username;
 	private String password;
-	private double credito;
+	private Double credito;
 	@Temporal(TemporalType.DATE)
 	private Date dataRegistrazione;
 	@ManyToMany
@@ -39,7 +37,7 @@ public class Utente {
 	private Set<Acquisto> acquisti = new HashSet<>(0);
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "utente", orphanRemoval = true)
 	private Set<Annuncio> annunci = new HashSet<>(0);
-	
+
 	public Utente() {
 	}
 
@@ -64,23 +62,23 @@ public class Utente {
 		this.username = username;
 		this.password = password;
 	}
-	 
+
 	public boolean isAdmin() {
 		for (Ruolo ruoloItem : ruoli) {
-			if(ruoloItem.getCodice().equals(Ruolo.ADMIN_ROLE))
+			if (ruoloItem.getCodice().equals(Ruolo.ADMIN_ROLE))
 				return true;
 		}
 		return false;
 	}
-	
+
 	public boolean isClassic() {
 		for (Ruolo ruoloItem : ruoli) {
-			if(ruoloItem.getCodice().equals(Ruolo.CLASSIC_USER_ROLE))
+			if (ruoloItem.getCodice().equals(Ruolo.CLASSIC_USER_ROLE))
 				return true;
 		}
 		return false;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -121,11 +119,11 @@ public class Utente {
 		this.password = password;
 	}
 
-	public double getCredito() {
+	public Double getCredito() {
 		return credito;
 	}
 
-	public void setCredito(double credito) {
+	public void setCredito(Double credito) {
 		this.credito = credito;
 	}
 
@@ -160,6 +158,5 @@ public class Utente {
 	public void setAnnunci(Set<Annuncio> annunci) {
 		this.annunci = annunci;
 	}
-	
-	
+
 }

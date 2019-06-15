@@ -16,12 +16,11 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import it.prova.ebay.model.Utente;
 import it.prova.ebay.model.dto.AnnuncioDTO;
 import it.prova.ebay.service.annuncio.AnnuncioService;
-import it.prova.ebay.service.categoria.CategoriaService;
 
 @WebServlet("/PrepareAcquistoServlet")
 public class PrepareAcquistoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     
+
 	@Autowired
 	private AnnuncioService annuncioService;
 
@@ -30,34 +29,36 @@ public class PrepareAcquistoServlet extends HttpServlet {
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
-	
-    public PrepareAcquistoServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public PrepareAcquistoServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		
-		Utente utenteInSession = (Utente)httpRequest.getSession().getAttribute("userInfo");
+
+		Utente utenteInSession = (Utente) httpRequest.getSession().getAttribute("userInfo");
 		if (utenteInSession == null) {
 			httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.jsp");
 			return;
 		}
-		
+
 		String idAnnuncio = request.getParameter("idAnnuncio");
 
 		request.setAttribute("annuncioAttribute",
 				AnnuncioDTO.buildAnnuncioDTOInstance(annuncioService.caricaEager(Long.parseLong(idAnnuncio))));
-		
+
 		request.setAttribute("idAnnuncio", request.getAttribute("idAnnuncio"));
 		RequestDispatcher rd = request.getRequestDispatcher("/acquisto/confermaAcquisto.jsp");
 		rd.forward(request, response);
-		
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 }

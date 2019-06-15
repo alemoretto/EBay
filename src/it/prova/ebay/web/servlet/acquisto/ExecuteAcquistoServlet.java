@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,10 +33,10 @@ public class ExecuteAcquistoServlet extends HttpServlet {
 
 	@Autowired
 	private AnnuncioService annuncioService;
-	
+
 	@Autowired
 	private UtenteService utenteService;
-	
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -56,7 +55,7 @@ public class ExecuteAcquistoServlet extends HttpServlet {
 
 		request.setAttribute("idAnnuncio", request.getParameter("idAnnuncio"));
 
-		if(!acquistoService.acquista(idAnnuncio, idUtente)) {
+		if (!acquistoService.acquista(idAnnuncio, idUtente)) {
 			request.setAttribute("esitoAcquistoBool", false);
 			request.setAttribute("esitoAcquisto", "Non è stato possibile completare l'acquisto  :(  ");
 			request.setAttribute("annuncioAttribute",
@@ -65,26 +64,28 @@ public class ExecuteAcquistoServlet extends HttpServlet {
 			return;
 		}
 		Utente utenteInPagina = utenteService.caricaEager(utenteInSession.getId());
-		
+
 		Set<Acquisto> storicoAcquisti = utenteInPagina.getAcquisti();
-		
+
 		List<AcquistoDTO> storicoAcquistiDTO = new ArrayList<>(0);
-		if(storicoAcquisti.size() > 0) {
+		if (storicoAcquisti.size() > 0) {
 			for (Acquisto acq : storicoAcquisti) {
-				storicoAcquistiDTO.add(new AcquistoDTO(acq.getDescrizione(), Double.toString(acq.getPrezzo()), Integer.toString(acq.getAnno())));
+				storicoAcquistiDTO.add(new AcquistoDTO(acq.getDescrizione(), Double.toString(acq.getPrezzo()),
+						Integer.toString(acq.getAnno())));
 			}
 		}
 		request.setAttribute("esitoAcquistoBool", true);
 		request.setAttribute("storicoDTOAttribute", storicoAcquistiDTO);
 		request.setAttribute("esitoAcquisto", "Acquisto completato  :)  ");
 
-		utenteInSession = utenteService.eseguiAccessoEager(utenteInSession.getUsername(), utenteInSession.getPassword());
-		//metto utente in sessione
-		HttpSession session =  request.getSession();
+		utenteInSession = utenteService.eseguiAccessoEager(utenteInSession.getUsername(),
+				utenteInSession.getPassword());
+		// metto utente in sessione
+		HttpSession session = request.getSession();
 		session.setAttribute("userInfo", utenteInSession);
-		
+
 		request.getRequestDispatcher("/utente/risultatiStorico.jsp").forward(request, response);
-		
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -13,48 +13,40 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import it.prova.ebay.model.Annuncio;
 import it.prova.ebay.model.Utente;
-import it.prova.ebay.model.dto.AnnuncioDTO;
-import it.prova.ebay.service.annuncio.AnnuncioService;
-import it.prova.ebay.service.categoria.CategoriaService;
 import it.prova.ebay.service.utente.UtenteService;
 
 @WebServlet("/utente/ExecuteRicercaAnnuncioUtenteServlet")
 public class ExecuteRicercaAnnuncioUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	@Autowired
-	private AnnuncioService annuncioService;
-
-	@Autowired
-	private CategoriaService categoriaService;
 
 	@Autowired
 	private UtenteService utenteService;
-	
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
-	
-    public ExecuteRicercaAnnuncioUtenteServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public ExecuteRicercaAnnuncioUtenteServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		Long id = Long.parseLong(request.getParameter("idUtente"));
 		Utente utente = utenteService.caricaEager(id);
-		
+
 		request.setAttribute("listaAnnunciAttribute", utente.getAnnunci());
 
 		RequestDispatcher rd = request.getRequestDispatcher("/utente/risultatiAnnuncio.jsp");
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 }

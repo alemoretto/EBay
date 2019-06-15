@@ -1,13 +1,6 @@
 package it.prova.ebay.web.servlet.admin;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -20,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import it.prova.ebay.model.Ruolo;
 import it.prova.ebay.model.Utente;
 import it.prova.ebay.model.dto.UtenteDTO;
 import it.prova.ebay.service.ruolo.RuoloService;
@@ -29,7 +21,7 @@ import it.prova.ebay.service.utente.UtenteService;
 @WebServlet("/admin/ExecuteModificaUtenteServlet")
 public class ExecuteModificaUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	@Autowired
 	private UtenteService utenteService;
 
@@ -41,17 +33,20 @@ public class ExecuteModificaUtenteServlet extends HttpServlet {
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
-	
-	public ExecuteModificaUtenteServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ExecuteModificaUtenteServlet() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		UtenteDTO utenteDTO = new UtenteDTO(Long.parseLong(request.getParameter("idInput")), request.getParameter("nomeInput"), request.getParameter("cognomeInput"),
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		UtenteDTO utenteDTO = new UtenteDTO(Long.parseLong(request.getParameter("idInput")),
+				request.getParameter("nomeInput"), request.getParameter("cognomeInput"),
 				request.getParameter("usernameInput"), request.getParameter("passwordInput"),
 				request.getParameter("creditoInput"), request.getParameterValues("ruoloInput"), ruoloService.listAll());
 

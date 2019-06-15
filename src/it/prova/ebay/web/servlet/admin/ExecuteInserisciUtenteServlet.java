@@ -3,9 +3,7 @@ package it.prova.ebay.web.servlet.admin;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import it.prova.ebay.model.Ruolo;
 import it.prova.ebay.model.Utente;
 import it.prova.ebay.model.dto.UtenteDTO;
 import it.prova.ebay.service.ruolo.RuoloService;
@@ -74,10 +71,10 @@ public class ExecuteInserisciUtenteServlet extends HttpServlet {
 			request.setAttribute("messaggiDiErrore", validazione);
 			RequestDispatcher rd = request.getRequestDispatcher("/admin/inserisciUtente.jsp");
 			rd.forward(request, response);
-			
+
 			return;
 		}
-		
+
 		Utente utenteDaInserire = UtenteDTO.buildUtenteInstance(utenteDTO);
 		utenteDaInserire.setDataRegistrazione(new Date());
 //		String[] ruoli = request.getParameterValues("ruoloItem");

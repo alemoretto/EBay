@@ -1,10 +1,14 @@
 package it.prova.ebay.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Categoria {
@@ -15,6 +19,8 @@ public class Categoria {
 	private Long id;
 	private String descrizione;
 	private String codice;
+	@ManyToMany
+	private Set<Annuncio> annunci = new HashSet<>(0);
 
 	public Categoria() {
 	}
@@ -30,7 +36,7 @@ public class Categoria {
 		super();
 		this.id = id;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

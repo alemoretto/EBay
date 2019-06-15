@@ -12,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -51,13 +50,13 @@ public class SignUpServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		Ruolo classicUser = ruoloService.findByExample(new Ruolo(Ruolo.CLASSIC_USER_ROLE)).get(0); 
-		String[] ruoloUtenteClassico = {Long.toString(classicUser.getId())};
+
+		Ruolo classicUser = ruoloService.findByExample(new Ruolo(Ruolo.CLASSIC_USER_ROLE)).get(0);
+		String[] ruoloUtenteClassico = { Long.toString(classicUser.getId()) };
 		String creditoIniziale = "0";
 		UtenteDTO utenteDTO = new UtenteDTO(request.getParameter("nomeInput"), request.getParameter("cognomeInput"),
-				request.getParameter("usernameInput"), request.getParameter("passwordInput"),
-				creditoIniziale, ruoloUtenteClassico, ruoloService.listAll());
+				request.getParameter("usernameInput"), request.getParameter("passwordInput"), creditoIniziale,
+				ruoloUtenteClassico, ruoloService.listAll());
 
 		if (!utenteDTO.validate().isEmpty()) {
 			request.setAttribute("utenteDTOAttribute", utenteDTO);
@@ -78,10 +77,10 @@ public class SignUpServlet extends HttpServlet {
 			request.setAttribute("messaggiDiErrore", validazione);
 			RequestDispatcher rd = request.getRequestDispatcher("/signUp.jsp");
 			rd.forward(request, response);
-			
+
 			return;
 		}
-		
+
 		Utente utenteDaInserire = UtenteDTO.buildUtenteInstance(utenteDTO);
 		utenteDaInserire.setDataRegistrazione(new Date());
 //		utenteDaInserire.getRuoli().add(ruoloService.carica(2L));

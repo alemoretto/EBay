@@ -2,7 +2,6 @@ package it.prova.ebay.model.dto;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -72,7 +71,7 @@ public class UtenteDTO {
 			}
 		}
 	}
-	
+
 	public UtenteDTO(String nome, String cognome, String username, String password) {
 		super();
 		this.nome = nome;
@@ -106,7 +105,7 @@ public class UtenteDTO {
 			utente.setRuoli(utenteDTO.getRuoli());
 		} catch (Exception e) {
 		}
-		
+
 		return utente;
 	}
 
@@ -130,7 +129,7 @@ public class UtenteDTO {
 			utenteDTO.setRuoli(utente.getRuoli());
 		}
 		try {
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			utenteDTO.setDataRegistrazione(dateFormat.format(utente.getDataRegistrazione()));
 		} catch (Exception e) {
 		}
@@ -160,7 +159,6 @@ public class UtenteDTO {
 			validazione.put("passwordInput", "Attenzione! Il campo Password è obbligatorio");
 		}
 
-		
 		if (StringUtils.isEmpty(this.credito)) {
 			validazione.put("creditoInput", "Attenzione! Il campo Credito è obbligatorio");
 		} else {
@@ -171,10 +169,10 @@ public class UtenteDTO {
 			}
 		}
 
-		if ( this.ruoli.size() <= 0 ) {
+		if (this.ruoli.size() <= 0) {
 			validazione.put("ruoloInput", "Attenzione! Selezionare almeno un ruolo");
-		} 
-		
+		}
+
 		return validazione;
 	}
 
@@ -226,7 +224,6 @@ public class UtenteDTO {
 		this.credito = credito;
 	}
 
-	
 	public String getDataRegistrazione() {
 		return dataRegistrazione;
 	}
@@ -243,5 +240,4 @@ public class UtenteDTO {
 		this.ruoli = ruoli;
 	}
 
-	
 }

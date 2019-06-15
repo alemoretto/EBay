@@ -26,7 +26,7 @@ public class Annuncio {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "utente_id", nullable = false)
 	private Utente utente;
-	private double prezzo;
+	private Double prezzo;
 	@Temporal(TemporalType.DATE)
 	private Date dataPubblicazione;
 	private boolean aperto;
@@ -37,7 +37,7 @@ public class Annuncio {
 	public Annuncio() {
 	}
 
-	public Annuncio(String testoAnnuncio, Utente utente, double prezzo, boolean aperto) {
+	public Annuncio(String testoAnnuncio, Utente utente, Double prezzo, boolean aperto) {
 		super();
 		this.testoAnnuncio = testoAnnuncio;
 		this.utente = utente;
@@ -45,7 +45,7 @@ public class Annuncio {
 		this.aperto = aperto;
 	}
 
-	public Annuncio(String testoAnnuncio, double prezzo, boolean aperto) {
+	public Annuncio(String testoAnnuncio, Double prezzo, boolean aperto) {
 		super();
 		this.testoAnnuncio = testoAnnuncio;
 		this.prezzo = prezzo;
@@ -76,11 +76,11 @@ public class Annuncio {
 		this.utente = utente;
 	}
 
-	public double getPrezzo() {
+	public Double getPrezzo() {
 		return prezzo;
 	}
 
-	public void setPrezzo(double prezzo) {
+	public void setPrezzo(Double prezzo) {
 		this.prezzo = prezzo;
 	}
 
@@ -92,7 +92,6 @@ public class Annuncio {
 		this.dataPubblicazione = dataPubblicazione;
 	}
 
-	
 	public Set<Categoria> getCategorie() {
 		return categorie;
 	}
@@ -108,5 +107,5 @@ public class Annuncio {
 	public void setAperto(boolean aperto) {
 		this.aperto = aperto;
 	}
-	
+
 }

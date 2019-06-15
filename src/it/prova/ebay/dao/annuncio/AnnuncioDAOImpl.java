@@ -36,7 +36,8 @@ public class AnnuncioDAOImpl implements AnnuncioDAO {
 
 	@Override
 	public Annuncio getEager(Long id) {
-		Query q = entityManager.createQuery("SELECT a from Annuncio a JOIN FETCH a.utente LEFT JOIN FETCH a.categorie WHERE a.id= :id");
+		Query q = entityManager.createQuery(
+				"SELECT a from Annuncio a JOIN FETCH a.utente LEFT JOIN FETCH a.categorie WHERE a.id= :id");
 		q.setParameter("id", id);
 		return (Annuncio) q.getSingleResult();
 	}

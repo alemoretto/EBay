@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import it.prova.ebay.service.annuncio.AnnuncioService;
-import it.prova.ebay.service.utente.UtenteService;
 
 @WebServlet("/utente/ExecuteEliminaAnnuncioUtenteServlet")
 public class ExecuteEliminaAnnuncioUtenteServlet extends HttpServlet {

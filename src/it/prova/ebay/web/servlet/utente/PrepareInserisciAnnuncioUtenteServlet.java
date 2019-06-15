@@ -14,14 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import it.prova.ebay.model.dto.AnnuncioDTO;
-import it.prova.ebay.model.dto.UtenteDTO;
 import it.prova.ebay.service.categoria.CategoriaService;
-import it.prova.ebay.service.ruolo.RuoloService;
 
 @WebServlet("/utente/PrepareInserisciAnnuncioUtenteServlet")
 public class PrepareInserisciAnnuncioUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	@Autowired
 	private CategoriaService categoriaService;
 
@@ -30,19 +28,21 @@ public class PrepareInserisciAnnuncioUtenteServlet extends HttpServlet {
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
-	
-    public PrepareInserisciAnnuncioUtenteServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public PrepareInserisciAnnuncioUtenteServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setAttribute("annuncioDTOAttribute", new AnnuncioDTO());
 		request.setAttribute("listaCategorieAttribute", categoriaService.listAll());
 		RequestDispatcher rd = request.getRequestDispatcher("/utente/inserisciAnnuncio.jsp");
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 }

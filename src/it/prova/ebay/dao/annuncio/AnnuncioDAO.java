@@ -8,7 +8,7 @@ import it.prova.ebay.model.Annuncio;
 public interface AnnuncioDAO extends IBaseDAO<Annuncio> {
 
 	public List<Annuncio> findByExampleEager(Annuncio example);
-	
+
 	public Annuncio getEager(Long id);
-	
+
 }
