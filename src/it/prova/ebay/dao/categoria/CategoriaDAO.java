@@ -13,4 +13,6 @@ public interface CategoriaDAO extends IBaseDAO<Categoria> {
 
 	public boolean existCodice(String codice);
 	
+	public Categoria getEager(Long id);
+	
 }

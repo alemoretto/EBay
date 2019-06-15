@@ -44,6 +44,17 @@ public class Categoria {
 		this.id = id;
 	}
 
+	public boolean equals(Object o) {
+		if (o != null && o instanceof Categoria) {
+			Categoria categoria = (Categoria) o;
+			if (categoria.getDescrizione().equals(this.getDescrizione())
+					&& categoria.getCodice().equals(this.getCodice())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Long getId() {
 		return id;
 	}

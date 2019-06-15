@@ -12,7 +12,8 @@ public class CategoriaDTO {
 	private Long id;
 	private String descrizione;
 	private String codice;
-
+	private String numeroAnnunciAssociati;
+	
 	public CategoriaDTO() {
 	}
 
@@ -45,6 +46,16 @@ public class CategoriaDTO {
 		return new Categoria(categoriaDTO.getId(),categoriaDTO.getDescrizione(),categoriaDTO.getCodice());
 	}
 	
+	public static CategoriaDTO buildCategoriaDTOInstance(Categoria categoria) {
+		CategoriaDTO categoriaDTO = new CategoriaDTO(categoria.getId(),categoria.getDescrizione(),categoria.getCodice());
+		try {
+			categoriaDTO.numeroAnnunciAssociati = Integer.toString(categoria.getAnnunci().size());
+		} catch (Exception e) {
+		}
+		
+		return categoriaDTO;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -67,6 +78,14 @@ public class CategoriaDTO {
 
 	public void setCodice(String codice) {
 		this.codice = codice;
+	}
+
+	public String getNumeroAnnunciAssociati() {
+		return numeroAnnunciAssociati;
+	}
+
+	public void setNumeroAnnunciAssociati(String numeroAnnunciAssociati) {
+		this.numeroAnnunciAssociati = numeroAnnunciAssociati;
 	}
 
 }

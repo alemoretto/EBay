@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import it.prova.ebay.model.dto.CategoriaDTO;
 import it.prova.ebay.service.categoria.CategoriaService;
 
-@WebServlet("/admin/categoria/SendRedirectCategoriaServlet")
-public class SendRedirectCategoriaServlet extends HttpServlet {
+@WebServlet("/admin/categoria/PrepareEliminaCategoriaServlet")
+public class PrepareEliminaCategoriaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
@@ -27,15 +28,21 @@ public class SendRedirectCategoriaServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 
-	public SendRedirectCategoriaServlet() {
+	public PrepareEliminaCategoriaServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("listaCategorieAttribute", categoriaService.listAll());
 
-		request.getRequestDispatcher("/admin/categoria/risultatiCategoria.jsp").forward(request, response);
+		Long idCategoria = Long.parseLong(request.getParameter("idCategoria"));
+
+		CategoriaDTO categoriaDTO = CategoriaDTO.buildCategoriaDTOInstance(categoriaService.caricaEager(idCategoria));
+
+		request.setAttribute("categoriaDTOAttribute", categoriaDTO);
+
+		request.getRequestDispatcher("/admin/categoria/rimuoviCategoria.jsp").forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

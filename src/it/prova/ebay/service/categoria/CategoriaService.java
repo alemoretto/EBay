@@ -9,6 +9,8 @@ public interface CategoriaService {
 	public List<Categoria> listAll();
 
 	public Categoria carica(Long id);
+	
+	public Categoria caricaEager(Long id);
 
 	public void aggiorna(Categoria o);
 

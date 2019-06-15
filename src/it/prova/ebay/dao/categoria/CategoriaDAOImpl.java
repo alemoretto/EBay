@@ -35,6 +35,10 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 		return entityManager.find(Categoria.class, id);
 	}
 
+	public Categoria getEager(Long id) {
+		return (Categoria) entityManager.createQuery("SELECT c FROM Categoria c LEFT JOIN FETCH c.annunci WHERE c.id = " + Long.toString(id)).getSingleResult();
+	}
+	
 	@Override
 	public void update(Categoria o) {
 		entityManager.merge(o);

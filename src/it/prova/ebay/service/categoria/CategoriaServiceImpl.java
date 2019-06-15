@@ -25,6 +25,11 @@ public class CategoriaServiceImpl implements CategoriaService {
 		return categoriaDAO.get(id);
 	}
 
+	@Transactional(readOnly = true)
+	public Categoria caricaEager(Long id) {
+		return categoriaDAO.getEager(id);
+	}
+
 	@Transactional
 	public void aggiorna(Categoria o) {
 		categoriaDAO.update(o);
@@ -44,12 +49,12 @@ public class CategoriaServiceImpl implements CategoriaService {
 	public List<Categoria> findByExample(Categoria example) {
 		return categoriaDAO.findByExample(example);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<Categoria> findByExampleEager(Categoria example) {
 		return categoriaDAO.findByExampleEager(example);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public boolean existDescrizione(String descrizione) {
 		return categoriaDAO.existDescrizione(descrizione);
@@ -59,5 +64,5 @@ public class CategoriaServiceImpl implements CategoriaService {
 	public boolean existCodice(String codice) {
 		return categoriaDAO.existDescrizione(codice);
 	}
-	
+
 }

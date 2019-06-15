@@ -18,8 +18,8 @@ import it.prova.ebay.model.Categoria;
 import it.prova.ebay.model.dto.CategoriaDTO;
 import it.prova.ebay.service.categoria.CategoriaService;
 
-@WebServlet("/admin/categoria/ExecuteInserisciCategoriaServlet")
-public class ExecuteInserisciCategoriaServlet extends HttpServlet {
+@WebServlet("/admin/categoria/ExecuteModificaCategoriaServlet")
+public class ExecuteModificaCategoriaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
@@ -31,7 +31,7 @@ public class ExecuteInserisciCategoriaServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 
-	public ExecuteInserisciCategoriaServlet() {
+	public ExecuteModificaCategoriaServlet() {
 		super();
 	}
 
@@ -42,8 +42,8 @@ public class ExecuteInserisciCategoriaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		CategoriaDTO categoriaDTO = new CategoriaDTO(request.getParameter("descrizioneInput"),
-				request.getParameter("codiceInput"));
+		CategoriaDTO categoriaDTO = new CategoriaDTO(Long.parseLong(request.getParameter("idInput")),
+				request.getParameter("descrizioneInput"), request.getParameter("codiceInput"));
 
 		if (!categoriaDTO.validate().isEmpty()) {
 			request.setAttribute("categoriaDTOAttribute", categoriaDTO);
@@ -53,32 +53,38 @@ public class ExecuteInserisciCategoriaServlet extends HttpServlet {
 			return;
 		}
 
-		if (categoriaService.existDescrizione(categoriaDTO.getDescrizione())) {
+		Categoria categoriaOLD = categoriaService.carica(categoriaDTO.getId());
+		
+//		if (!categoriaDaInserire.equals(categoriaService.carica(categoriaDTO.getId()))) {
+			if (categoriaService.existDescrizione(categoriaDTO.getDescrizione())  &&  !categoriaOLD.getDescrizione().equals(categoriaDTO.getDescrizione())) {
 
-			request.setAttribute("categoriaDTOAttribute", categoriaDTO);
-			Map<String, String> validazione = new HashMap<String, String>();
-			validazione.put("descrizioneInput", "Attenzione! Questa descrizione è già associata a un'altra categoria");
-			request.setAttribute("messaggiDiErrore", validazione);
+				request.setAttribute("categoriaDTOAttribute", categoriaDTO);
+				Map<String, String> validazione = new HashMap<String, String>();
+				validazione.put("descrizioneInput",
+						"Attenzione! Questa descrizione è già associata a un'altra categoria");
+				request.setAttribute("messaggiDiErrore", validazione);
 
-			request.getRequestDispatcher("/admin/categoria/inserisciCategoria.jsp").forward(request, response);
+				request.getRequestDispatcher("/admin/categoria/inserisciCategoria.jsp").forward(request, response);
 
-			return;
-		}
+				return;
+			}
 
-		if (categoriaService.existCodice(categoriaDTO.getCodice())) {
-
-			request.setAttribute("categoriaDTOAttribute", categoriaDTO);
-			Map<String, String> validazione = new HashMap<String, String>();
-			validazione.put("codiceInput", "Attenzione! Questo codice è già associato a un'altra categoria");
-			request.setAttribute("messaggiDiErrore", validazione);
-
-			request.getRequestDispatcher("/admin/categoria/inserisciCategoria.jsp").forward(request, response);
-
-			return;
-		}
+//			if (categoriaService.existCodice(categoriaDTO.getCodice())) {
+//
+//				request.setAttribute("categoriaDTOAttribute", categoriaDTO);
+//				Map<String, String> validazione = new HashMap<String, String>();
+//				validazione.put("codiceInput", "Attenzione! Questo codice è già associato a un'altra categoria");
+//				request.setAttribute("messaggiDiErrore", validazione);
+//
+//				request.getRequestDispatcher("/admin/categoria/inserisciCategoria.jsp").forward(request, response);
+//
+//				return;
+//			}
+//		}
 
 		Categoria categoriaDaInserire = CategoriaDTO.buildCategoriaInstance(categoriaDTO);
-		categoriaService.inserisci(categoriaDaInserire);
+		
+		categoriaService.aggiorna(categoriaDaInserire);
 
 		response.sendRedirect(request.getContextPath() + "/admin/categoria/SendRedirectCategoriaServlet");
 
