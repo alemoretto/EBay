@@ -1,4 +1,4 @@
-package it.prova.ebay.web.servlet.admin;
+package it.prova.ebay.web.servlet.admin.utente;
 
 import java.io.IOException;
 
@@ -13,14 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import it.prova.ebay.service.utente.UtenteService;
+import it.prova.ebay.model.dto.UtenteDTO;
+import it.prova.ebay.service.ruolo.RuoloService;
 
-@WebServlet("/admin/SendRedirectAdminServlet")
-public class SendRedirectAdminServlet extends HttpServlet {
+@WebServlet("/admin/utente/PrepareInserisciUtenteServlet")
+public class PrepareInserisciUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@Autowired
-	private UtenteService utenteService;
+	private RuoloService ruoloService;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -28,14 +29,14 @@ public class SendRedirectAdminServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 	
-    public SendRedirectAdminServlet() {
+    public PrepareInserisciUtenteServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("listaUtentiAttributeName", utenteService.listAll());
-		RequestDispatcher rd = request.getRequestDispatcher("/admin/risultatiUtente.jsp");
-
+		request.setAttribute("utenteDTOAttribute", new UtenteDTO());
+		request.setAttribute("listRuoliAttribute", ruoloService.listAll());
+		RequestDispatcher rd = request.getRequestDispatcher("/admin/utente/inserisciUtente.jsp");
 		rd.forward(request, response);
 	}
 

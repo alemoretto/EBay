@@ -23,11 +23,39 @@
 						<a class="nav-link" href="<%= request.getContextPath()%>/utente/PrepareAreaPrivataServlet">Area Privata</a>
 					</c:if>
 			</li>
-			<li class="nav-item active">
+			
 			<c:if test="${sessionScope.userInfo != null && sessionScope.userInfo.isAdmin()}">
-						<a class="nav-link" href="<%= request.getContextPath()%>/admin/PrepareRicercaUtenteServlet">Gestione Utenti</a>
-					</c:if>
+			<li onmouseover="show()" onmouseleave="hide()" class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button"  aria-haspopup="true" 
+				data-toggle="dropdown"
+				aria-expanded="true" > Area amministrativa </a>
+				<div style="display:none;" id="lista" class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a id="linkUtenti"  class="dropdown-item" href="<%= request.getContextPath()%>/admin/utente/PrepareRicercaUtenteServlet">Gestione Utenti</a>
+					 <a id="linkCategorie" style="display:block;" class="dropdown-item" href="<%= request.getContextPath()%>/admin/categoria/PrepareRicercaCategoriaServlet">Gestione Categorie</a>
+				</div>
 			</li>
+			</c:if>
+			
+			
+<script>
+function show(){
+	document.getElementById("lista").style.display = 'block';
+// 	document.getElementById("linkCategorie").style.display = 'none';
+}
+</script>
+<script>
+function hide(){
+	document.getElementById("lista").style.display = 'none';
+// 	document.getElementById("linkCategorie").style.display = 'none';
+}
+</script>
+				
+<!-- 			<li class="nav-item active"> -->
+<%-- 			<c:if test="${sessionScope.userInfo != null && sessionScope.userInfo.isAdmin()}"> --%>
+<%-- 						<a class="nav-link" href="<%= request.getContextPath()%>/admin/utente/PrepareRicercaUtenteServlet">Gestione Utenti</a> --%>
+<%-- 					</c:if> --%>
+<!-- 			</li> -->
 			
 		</ul>
 		 <ul class="nav navbar-nav navbar-right">

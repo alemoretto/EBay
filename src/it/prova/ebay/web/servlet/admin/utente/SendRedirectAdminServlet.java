@@ -1,4 +1,4 @@
-package it.prova.ebay.web.servlet.admin;
+package it.prova.ebay.web.servlet.admin.utente;
 
 import java.io.IOException;
 
@@ -13,38 +13,31 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import it.prova.ebay.model.dto.UtenteDTO;
-import it.prova.ebay.service.ruolo.RuoloService;
 import it.prova.ebay.service.utente.UtenteService;
 
-@WebServlet("/admin/PrepareModificaUtenteServlet")
-public class PrepareModificaUtenteServlet extends HttpServlet {
+@WebServlet("/admin/utente/SendRedirectAdminServlet")
+public class SendRedirectAdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@Autowired
 	private UtenteService utenteService;
 
-	@Autowired
-	private RuoloService ruoloService;
-	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 	
-    public PrepareModificaUtenteServlet() {
+    public SendRedirectAdminServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long idUtenteDaPagina = Long.parseLong(request.getParameter("idUtente"));
+		request.setAttribute("listaUtentiAttributeName", utenteService.listAll());
+		RequestDispatcher rd = request.getRequestDispatcher("/admin/utente/risultatiUtente.jsp");
 
-		request.setAttribute("utenteDTOAttribute",
-				UtenteDTO.buildUtenteDTOInstance(utenteService.caricaEager(idUtenteDaPagina)));
-		request.setAttribute("listRuoliAttribute", ruoloService.listAll());
-		RequestDispatcher rd = request.getRequestDispatcher("/admin/modificaUtente.jsp");
-		rd.forward(request, response);	}
+		rd.forward(request, response);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}

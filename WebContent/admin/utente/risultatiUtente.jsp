@@ -12,7 +12,7 @@
 <body>
 <div class="container">
 
-  	<%@ include file="../header.jsp" %>
+  	<%@ include file="../../header.jsp" %>
   	
   	<div class="page-header">
 	  <h3>La ricerca ha prodotto ${listaUtentiAttributeName.size()}  risultati: </h3>
@@ -31,9 +31,9 @@
 				<td>${utenteItem.nome}</td>
 				<td>${utenteItem.cognome}</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/admin/VisualizzaDettaglioUtenteServlet?idUtente=${utenteItem.id}" class="btn btn-info">Dettaglio</a>
-					<a href="${pageContext.request.contextPath}/admin/PrepareModificaUtenteServlet?idUtente=${utenteItem.id}" class="btn btn-info">Modifica</a>
-					<a href="${pageContext.request.contextPath}/admin/PrepareEliminaUtenteServlet?idUtente=${utenteItem.id}" class="btn btn-info">Elimina</a>
+					<a href="${pageContext.request.contextPath}/admin/utente/VisualizzaDettaglioUtenteServlet?idUtente=${utenteItem.id}" class="btn btn-info">Dettaglio</a>
+					<a href="${pageContext.request.contextPath}/admin/utente/PrepareModificaUtenteServlet?idUtente=${utenteItem.id}" class="btn btn-info">Modifica</a>
+					<a href="${pageContext.request.contextPath}/admin/utente/PrepareEliminaUtenteServlet?idUtente=${utenteItem.id}" class="btn btn-info">Elimina</a>
 				</td>
 			</tr>
 		</c:forEach>

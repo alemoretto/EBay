@@ -10,7 +10,7 @@
 <body>
 
 	<div class="container">
-		<%@ include file="../header.jsp"%>
+		<%@ include file="../../header.jsp"%>
 
 		<div class="page-header">
 			<h3>Pagina di Dettaglio dell'Utente:
@@ -22,7 +22,7 @@
 			<%@ include file="details.jsp"%>
 
 			<a
-				href="${pageContext.request.contextPath}/admin/ExecuteEliminaUtenteServlet?idUtente=${utenteDTOAttribute.id}"
+				href="${pageContext.request.contextPath}/admin/utente/ExecuteEliminaUtenteServlet?idUtente=${utenteDTOAttribute.id}"
 				class="btn btn-primary btn-md">Rimuovi</a>
 		</div>
 	</div>

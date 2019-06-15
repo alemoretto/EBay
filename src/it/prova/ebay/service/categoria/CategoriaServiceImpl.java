@@ -44,5 +44,20 @@ public class CategoriaServiceImpl implements CategoriaService {
 	public List<Categoria> findByExample(Categoria example) {
 		return categoriaDAO.findByExample(example);
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Categoria> findByExampleEager(Categoria example) {
+		return categoriaDAO.findByExampleEager(example);
+	}
+	
+	@Transactional(readOnly = true)
+	public boolean existDescrizione(String descrizione) {
+		return categoriaDAO.existDescrizione(descrizione);
+	}
 
+	@Transactional(readOnly = true)
+	public boolean existCodice(String codice) {
+		return categoriaDAO.existDescrizione(codice);
+	}
+	
 }

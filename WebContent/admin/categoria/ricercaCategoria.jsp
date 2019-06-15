@@ -1,28 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Ricerca Articoli</title>
+<title>Ricerca Categoria</title>
 </head>
 <body>
 
-	<div class="container">
+<div class="container">
 
-		<%@ include file="../header.jsp"%>
+   <%@ include file="../../header.jsp" %>
+      
+    <div class="page-header">
+	  <h3>Ricerca Categoria</h3>
+	</div>
 
-		<br>
-		<c:if test="${messaggio != null}">
-			<div class="alert alert-danger">${messaggio}</div>
-		</c:if>
-		<div class="page-header">
-			<h2>Ricerca Annunci</h2>
-		</div>
-		
-		<form class="form-horizontal" action="ExecuteRicercaAnnuncioServlet" name="formRicerca"
+<form class="form-horizontal" action="${pageContext.request.contextPath}/admin/categoria/ExecuteRicercaCategoriaServlet"
 			method="post">
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="testoAnnuncioInputId">Titolo:</label>
@@ -40,25 +34,19 @@
 			</div>
 			<br>
 			
-			<c:forEach items="${listaCategorieAttribute}" var="categoriaItem">
-				<div class="custom-control custom-checkbox">
-					<input id="${categoriaItem.id}" type="checkbox" name="categoriaInput" value="${categoriaItem.id}" class="custom-control-input"> 
-					<label class="custom-control-label" for="${categoriaItem.id}">${categoriaItem.descrizione}</label><br>
-				</div>
-			</c:forEach>
-			
-			
 			<br>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-primary btn-md">Cerca
-						annunci</button>
+						Categorie</button>
+			<a href="${pageContext.request.contextPath}/admin/categoria/PrepareInserisciCategoriaServlet" class="btn btn-primary btn-md">Inserisci</a>
 				</div>
 			</div>
 		</form>
+	
+    </div><!-- /.container -->
 
-	</div>
-	<!-- /.container -->
+
 
 </body>
 </html>

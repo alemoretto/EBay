@@ -17,5 +17,11 @@ public interface CategoriaService {
 	public void rimuovi(Categoria o);
 
 	public List<Categoria> findByExample(Categoria example);
+	
+	public List<Categoria> findByExampleEager(Categoria example);
+	
+	public boolean existDescrizione(String descrizione);
+	
+	public boolean existCodice(String codice);
 
 }

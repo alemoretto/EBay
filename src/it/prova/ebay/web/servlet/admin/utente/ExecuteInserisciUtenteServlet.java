@@ -1,4 +1,4 @@
-package it.prova.ebay.web.servlet.admin;
+package it.prova.ebay.web.servlet.admin.utente;
 
 import java.io.IOException;
 import java.util.Date;
@@ -21,7 +21,7 @@ import it.prova.ebay.model.dto.UtenteDTO;
 import it.prova.ebay.service.ruolo.RuoloService;
 import it.prova.ebay.service.utente.UtenteService;
 
-@WebServlet("/admin/ExecuteInserisciUtenteServlet")
+@WebServlet("/admin/utente/ExecuteInserisciUtenteServlet")
 public class ExecuteInserisciUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,7 +56,7 @@ public class ExecuteInserisciUtenteServlet extends HttpServlet {
 			request.setAttribute("utenteDTOAttribute", utenteDTO);
 			request.setAttribute("listRuoliAttribute", ruoloService.listAll());
 			request.setAttribute("messaggiDiErrore", utenteDTO.validate());
-			RequestDispatcher rd = request.getRequestDispatcher("/admin/inserisciUtente.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/admin/utente/inserisciUtente.jsp");
 			rd.forward(request, response);
 
 			return;
@@ -69,7 +69,7 @@ public class ExecuteInserisciUtenteServlet extends HttpServlet {
 			validazione.put("usernameInput",
 					"Attenzione! Lo username \"" + request.getParameter("usernameInput") + "\" è già stato preso");
 			request.setAttribute("messaggiDiErrore", validazione);
-			RequestDispatcher rd = request.getRequestDispatcher("/admin/inserisciUtente.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/admin/utente/inserisciUtente.jsp");
 			rd.forward(request, response);
 
 			return;
@@ -88,7 +88,7 @@ public class ExecuteInserisciUtenteServlet extends HttpServlet {
 //		utenteDaInserire.setDataRegistrazione(new Date());
 		utenteService.inserisci(utenteDaInserire);
 
-		response.sendRedirect(request.getContextPath() + "/admin/SendRedirectAdminServlet");
+		response.sendRedirect(request.getContextPath() + "/admin/utente/SendRedirectAdminServlet");
 
 	}
 

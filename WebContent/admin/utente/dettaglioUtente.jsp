@@ -10,7 +10,7 @@
 <body>
 
 	<div class="container">
-		<%@ include file="../header.jsp"%>
+		<%@ include file="../../header.jsp"%>
 
 		<div class="page-header">
 			<h3>Pagina di Dettaglio dell'Utente:

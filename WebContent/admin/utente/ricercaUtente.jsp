@@ -10,13 +10,13 @@
 
 <div class="container">
 
-   <%@ include file="../header.jsp" %>
+   <%@ include file="../../header.jsp" %>
       
     <div class="page-header">
 	  <h3>Ricerca Utente</h3>
 	</div>
 
-      	<form class="form-horizontal" action="${pageContext.request.contextPath}/admin/ExecuteRicercaUtenteServlet" method="post">
+      	<form class="form-horizontal" action="${pageContext.request.contextPath}/admin/utente/ExecuteRicercaUtenteServlet" method="post">
       		<div class="form-group">
       			<label class="control-label col-sm-2" for="nomeInputId">Nome:</label>
 	    		<div class="col-sm-4">
@@ -44,7 +44,7 @@
   			<div class="form-group">        
 		      <div class="col-sm-offset-2 col-sm-10">
 		        <button type="submit" class="btn btn-primary btn-md">Effettua Ricerca</button>
-		        <a href="${pageContext.request.contextPath}/admin/PrepareInserisciUtenteServlet" class="btn btn-primary btn-md">Inserisci nuovo Utente</a>
+		        <a href="${pageContext.request.contextPath}/admin/utente/PrepareInserisciUtenteServlet" class="btn btn-primary btn-md">Inserisci nuovo Utente</a>
 		      </div>
 		    </div>
 		</form>

@@ -1,8 +1,7 @@
-package it.prova.ebay.web.servlet.admin;
+package it.prova.ebay.web.servlet.admin.utente;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,12 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import it.prova.ebay.model.Utente;
-import it.prova.ebay.model.dto.UtenteDTO;
 import it.prova.ebay.service.utente.UtenteService;
 
-@WebServlet("/admin/PrepareEliminaUtenteServlet")
-public class PrepareEliminaUtenteServlet extends HttpServlet {
+@WebServlet("/admin/utente/ExecuteEliminaUtenteServlet")
+public class ExecuteEliminaUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
@@ -30,19 +27,18 @@ public class PrepareEliminaUtenteServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 
-	public PrepareEliminaUtenteServlet() {
+	public ExecuteEliminaUtenteServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		Long idUtenteDaPagina = Long.parseLong(request.getParameter("idUtente"));
-		Utente utenteCaricato = utenteService.caricaEager(idUtenteDaPagina);
-		request.setAttribute("utenteDTOAttribute",
-				UtenteDTO.buildUtenteDTOInstance(utenteCaricato));
-		request.setAttribute("ruoliUtenteDTOAttribute",utenteCaricato.getRuoli());
-		RequestDispatcher rd = request.getRequestDispatcher("/admin/rimuoviUtente.jsp");
-		rd.forward(request, response);
+
+		utenteService.rimuovi(utenteService.caricaEager(idUtenteDaPagina));
+
+		response.sendRedirect(request.getContextPath() + "/admin/utente/SendRedirectAdminServlet");
 
 	}
 

@@ -13,14 +13,14 @@
 	<div class="container">
 
 		
-		<%@ include file="../header.jsp"%>
+		<%@ include file="../../header.jsp"%>
 
 		
 		<div class="page-header">
 			<h3>Nuovo Utente</h3>
 		</div>
 		
-		<form class="form-horizontal" action="${pageContext.request.contextPath}/admin/ExecuteInserisciUtenteServlet" method="post">
+		<form class="form-horizontal" action="${pageContext.request.contextPath}/admin/utente/ExecuteInserisciUtenteServlet" method="post">
 
 			<div class="form-group">
 		<label class="control-label col-sm-2" for="nomeInputId">Nome:</label>

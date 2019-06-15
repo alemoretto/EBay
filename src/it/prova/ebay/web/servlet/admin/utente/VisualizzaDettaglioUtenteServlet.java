@@ -1,4 +1,4 @@
-package it.prova.ebay.web.servlet.admin;
+package it.prova.ebay.web.servlet.admin.utente;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import it.prova.ebay.model.Utente;
 import it.prova.ebay.model.dto.UtenteDTO;
 import it.prova.ebay.service.utente.UtenteService;
 
-@WebServlet("/admin/VisualizzaDettaglioUtenteServlet")
+@WebServlet("/admin/utente/VisualizzaDettaglioUtenteServlet")
 public class VisualizzaDettaglioUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class VisualizzaDettaglioUtenteServlet extends HttpServlet {
 		request.setAttribute("utenteDTOAttribute",
 				UtenteDTO.buildUtenteDTOInstance(utenteCaricato));
 		request.setAttribute("ruoliUtenteDTOAttribute",utenteCaricato.getRuoli());
-		RequestDispatcher rd = request.getRequestDispatcher("/admin/dettaglioUtente.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/admin/utente/dettaglioUtente.jsp");
 		rd.forward(request, response);
 
 	}

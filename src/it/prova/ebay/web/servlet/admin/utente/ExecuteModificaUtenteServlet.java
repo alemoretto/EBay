@@ -1,4 +1,4 @@
-package it.prova.ebay.web.servlet.admin;
+package it.prova.ebay.web.servlet.admin.utente;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import it.prova.ebay.model.dto.UtenteDTO;
 import it.prova.ebay.service.ruolo.RuoloService;
 import it.prova.ebay.service.utente.UtenteService;
 
-@WebServlet("/admin/ExecuteModificaUtenteServlet")
+@WebServlet("/admin/utente/ExecuteModificaUtenteServlet")
 public class ExecuteModificaUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -54,7 +54,7 @@ public class ExecuteModificaUtenteServlet extends HttpServlet {
 			request.setAttribute("utenteDTOAttribute", utenteDTO);
 			request.setAttribute("listRuoliAttribute", ruoloService.listAll());
 			request.setAttribute("messaggiDiErrore", utenteDTO.validate());
-			RequestDispatcher rd = request.getRequestDispatcher("/admin/modificaUtente.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/admin/utente/modificaUtente.jsp");
 			rd.forward(request, response);
 
 			return;
@@ -67,7 +67,7 @@ public class ExecuteModificaUtenteServlet extends HttpServlet {
 		utenteDaAggiornare.setAcquisti(temp.getAcquisti());
 		utenteService.aggiorna(utenteDaAggiornare);
 
-		response.sendRedirect(request.getContextPath() + "/admin/SendRedirectAdminServlet");
+		response.sendRedirect(request.getContextPath() + "/admin/utente/SendRedirectAdminServlet");
 
 	}
 

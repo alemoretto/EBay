@@ -32,6 +32,12 @@ public class AnnuncioDTO {
 		this.id = id;
 	}
 
+	public AnnuncioDTO(String testoAnnuncio, String prezzo) {
+		super();
+		this.testoAnnuncio = testoAnnuncio;
+		this.prezzo = prezzo;
+	}
+	
 	public AnnuncioDTO(String testoAnnuncio, String prezzo, String[] stringsCat, List<Categoria> listAll) {
 		super();
 		this.testoAnnuncio = testoAnnuncio;

@@ -1,8 +1,7 @@
-package it.prova.ebay.web.servlet.admin;
+package it.prova.ebay.web.servlet.admin.categoria;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,15 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import it.prova.ebay.model.dto.UtenteDTO;
-import it.prova.ebay.service.utente.UtenteService;
+import it.prova.ebay.model.Annuncio;
+import it.prova.ebay.model.Categoria;
+import it.prova.ebay.model.dto.AnnuncioDTO;
+import it.prova.ebay.service.categoria.CategoriaService;
 
-@WebServlet("/admin/ExecuteRicercaUtenteServlet")
-public class ExecuteRicercaUtenteServlet extends HttpServlet {
+@WebServlet("/admin/categoria/ExecuteRicercaCategoriaServlet")
+public class ExecuteRicercaCategoriaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private UtenteService utenteService;
+	private CategoriaService categoriaService;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -29,7 +30,7 @@ public class ExecuteRicercaUtenteServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 
-	public ExecuteRicercaUtenteServlet() {
+	public ExecuteRicercaCategoriaServlet() {
 		super();
 	}
 
@@ -39,14 +40,13 @@ public class ExecuteRicercaUtenteServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UtenteDTO utenteDTO = new UtenteDTO(request.getParameter("nomeInput"), request.getParameter("cognomeInput"),
-				request.getParameter("usernameInput"), request.getParameter("passwordInput"));
 
-		request.setAttribute("listaUtentiAttributeName",
-				utenteService.findByExample(UtenteDTO.buildUtenteInstance(utenteDTO)));
+		Annuncio annuncio = AnnuncioDTO.buildAnnuncioInstance(
+				new AnnuncioDTO(request.getParameter("testoAnnuncioInput"),	request.getParameter("prezzoInput")));
 
-		RequestDispatcher rd = request.getRequestDispatcher("/admin/risultatiUtente.jsp");
-		rd.forward(request, response);
+		request.setAttribute("listaCategorieAttribute", categoriaService.findByExampleEager(new Categoria(annuncio)));
+
+		request.getRequestDispatcher("/admin/categoria/risultatiCategoria.jsp").forward(request, response);
 	}
 
 }

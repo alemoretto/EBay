@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -14,6 +15,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.type.Type;
 import org.springframework.stereotype.Component;
 
+import it.prova.ebay.model.Annuncio;
 import it.prova.ebay.model.Categoria;
 
 @Component
@@ -74,4 +76,50 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Categoria> findByExampleEager(Categoria o) {
+
+		/*
+		 * String query =
+		 * "SELECT DISTINCT a FROM Annuncio a LEFT JOIN FETCH  a.categorie c WHERE a.aperto=TRUE AND a.testoAnnuncio LIKE '%"
+		 * + o.getTestoAnnuncio() + "%' "; if (o.getPrezzo() != -1) { query +=
+		 * " AND a.prezzo < " + Double.toString(o.getPrezzo()); } if
+		 * (o.getCategorie().size() > 0) { for (Categoria categoria : o.getCategorie())
+		 * { query += " AND c.id= " + Long.toString(categoria.getId()); } } Query q =
+		 * entityManager.createQuery(query);
+		 */
+
+		String query = "SELECT c FROM Categoria c LEFT JOIN FETCH c.annunci a WHERE 1=1";
+
+		for (Annuncio annuncio : o.getAnnunci()) {
+			if (!StringUtils.isEmpty(annuncio.getTestoAnnuncio())) {
+				query += " AND a.testoAnnuncio LIKE '%" + annuncio.getTestoAnnuncio() + "%' ";
+			}
+
+			if (annuncio.getPrezzo() != -1) {
+				query += " AND a.prezzo < " + Double.toString(annuncio.getPrezzo());
+			}
+		}
+
+		Query q = entityManager.createQuery(query + " GROUP BY c");
+
+		return (List<Categoria>) q.getResultList();
+
+	}
+
+	@Override
+	public boolean existDescrizione(String descrizione) {
+
+		return !entityManager.createQuery("SELECT c FROM Categoria c WHERE c.descrizione = '" + descrizione + "'").getResultList().isEmpty();
+				
+	}
+
+	@Override
+	public boolean existCodice(String codice) {
+
+		return !entityManager.createQuery("SELECT c FROM Categoria c WHERE c.descrizione = '" + codice + "'").getResultList().isEmpty();
+		
+	}
+	
 }
