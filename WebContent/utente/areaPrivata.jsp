@@ -62,7 +62,9 @@
 		<a	href="${pageContext.request.contextPath}/utente/ExecuteStoricoAcquistoServlet?idUtente=${utenteDTOAttribute.id}"
 				class="btn btn-primary btn-md">Storico Acquisti</a>
 		<a	href="${pageContext.request.contextPath}/utente/ExecuteRicercaAnnuncioUtenteServlet?idUtente=${utenteDTOAttribute.id}"
-				class="btn btn-primary btn-md">I tuoi annunci</a>
+				class="btn btn-primary btn-md">I miei annunci</a>
+		<a	href="${pageContext.request.contextPath}/utente/PrepareModificaDatiPersonaliServlet?idUtente=${utenteDTOAttribute.id}"
+				class="btn btn-primary btn-md">Modifica dati personali</a>
 			
 		</div>
 	</div>

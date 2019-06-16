@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import it.prova.ebay.model.Utente;
+import it.prova.ebay.model.dto.UtenteDTO;
 import it.prova.ebay.service.utente.UtenteService;
 
-@WebServlet("/utente/SendRedirectUtenteServlet")
-public class SendRedirectUtenteServlet extends HttpServlet {
+@WebServlet("/utente/PrepareModificaDatiPersonaliServlet")
+public class PrepareModificaDatiPersonaliServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
@@ -28,18 +28,19 @@ public class SendRedirectUtenteServlet extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 
-	public SendRedirectUtenteServlet() {
+	public PrepareModificaDatiPersonaliServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Long idUtenteDaPagina = Long.parseLong(request.getParameter("idUtente"));
 
-		Utente utenteInSession = (Utente) request.getSession().getAttribute("userInfo");
-		Utente utenteEager = utenteService.caricaEager(utenteInSession.getId());
-		request.setAttribute("listaAnnunciAttribute", utenteEager.getAnnunci());
+		request.setAttribute("utenteDTOAttribute",
+				UtenteDTO.buildUtenteDTOInstance(utenteService.caricaEager(idUtenteDaPagina)));
 
-		request.getRequestDispatcher("/utente/risultatiAnnuncio.jsp").forward(request, response);
+		request.getRequestDispatcher("/utente/modificaDatiPersonali.jsp").forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

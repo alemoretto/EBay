@@ -6,8 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script type="text/javascript" src="js/validate.js"></script>
-<title>Sign Up</title>
+<script type="text/javascript" src="../js/validate.js"></script>
+<title>Modifica Dati Personali</title>
 </head>
 <body>
 
@@ -18,13 +18,14 @@
 
 
 		<div class="page-header">
-			<h3>Registrati</h3>
+			<h3>Modifica Dati Personali:</h3>
 		</div>
 
 		<form class="form-horizontal"
-			action="${pageContext.request.contextPath}/SignUpServlet"
+			action="${pageContext.request.contextPath}/utente/ExecuteModificaDatiPersonaliServlet"
 			method="post"  onsubmit="return validateSignUp()">
 
+			<input type="hidden" name="idInput" value="${utenteDTOAttribute.id}">
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="nomeInputId">Nome:</label>
@@ -62,7 +63,7 @@
 				</c:if>
 				<div class="col-sm-4">
 					<input class="form-control" type="text" id="usernameInputId"
-						name="usernameInput" value="${utenteDTOAttribute.username}"
+						name="usernameInput" value="${utenteDTOAttribute.username}" readonly="readonly"
 						onfocus="resetStyle(id)">
 					<div id="usernameInputErrorId" style="display: none; color: red"></div>
 				</div>
@@ -94,7 +95,7 @@
 			<br>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-primary btn-md">Registrati</button>
+					<button type="submit" class="btn btn-primary btn-md">Aggiorna</button>
 				</div>
 			</div>
 		</form>

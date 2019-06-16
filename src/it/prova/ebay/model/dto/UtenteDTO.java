@@ -35,6 +35,15 @@ public class UtenteDTO {
 		this.credito = credito;
 	}
 
+	public UtenteDTO(Long id, String nome, String cognome, String username, String password) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.username = username;
+		this.password = password;
+	}
+	
 	public UtenteDTO(String nome, String cognome, String username, String password, String credito,
 			String[] ruoliString, List<Ruolo> listAll) {
 		super();

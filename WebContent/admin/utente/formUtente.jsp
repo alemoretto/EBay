@@ -48,7 +48,7 @@
 			${messaggiDiErrore.passwordInput}</div>
 	</c:if>
 	<div class="col-sm-4">
-		<input class="form-control" type="text" id="passwordInputId"
+		<input class="form-control" type="password" id="passwordInputId"
 			name="passwordInput" value="${utenteDTOAttribute.password}"
 			onfocus="resetStyle(id)">
 		<div id="passwordInputErrorId" style="display: none; color: red"></div>

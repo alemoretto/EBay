@@ -55,12 +55,20 @@ function validateUtente() {
 
 function validateSignUp() {
 
-	var prefissi = [ "nome", "cognome", "username", "password" ];
+	var isValid = true;
+
+	var prefissi = [ "nome", "cognome", "username", "password", "ripetiPassword" ];
 	var messaggio = "Campo obbligatorio";
 
-	return validateEmpty(prefissi, messaggio);
-
-
+	if (!validateEmpty(prefissi, messaggio)) {
+		isValid = false;
+	}
+	
+	if (!validatePassword("password","ripetiPassword", "Le due password non corrispondono")) {
+		return false;
+	}
+	
+	return isValid;
 }
 
 //###################################################################
@@ -111,6 +119,26 @@ function validateCheckBox(prefisso, messaggio) {
 
 	return true;
 }
+
+function validatePassword(password, ripetiPassword, messaggio) {
+	
+	document.getElementById(password + "InputErrorId").style.display = "none";
+	document.getElementById(ripetiPassword + "InputErrorId").style.display = "none";
+	
+	if (document.getElementById(password + "InputId").value != document.getElementById(ripetiPassword + "InputId").value) {
+		document.getElementById(password + "InputErrorId").style.display = "block";
+		document.getElementById(password + "InputId").style.borderColor = "red";
+		document.getElementById(ripetiPassword + "InputErrorId").style.display = "block";
+		document.getElementById(ripetiPassword + "InputId").style.borderColor = "red";
+		document.getElementById(ripetiPassword + "InputErrorId").innerHTML = messaggio;
+
+		return false;
+	}
+
+	return true;
+		
+}
+
 
 function resetStyle(id) {
 	document.getElementById(id).style.borderColor = "#ced4da";

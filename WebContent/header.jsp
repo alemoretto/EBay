@@ -5,7 +5,7 @@
 
 <!-- Static navbar -->
 <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd;">
-	<a class="navbar-brand" href="<%= request.getContextPath()%>/home">E-Bay</a>
+	<a class="navbar-brand" href="<%= request.getContextPath()%>/home"><strong>Home</strong></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
 		aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -60,7 +60,7 @@ function hide(){
 		</ul>
 		 <ul class="nav navbar-nav navbar-right">
 			<c:if test="${sessionScope.userInfo == null}">
-            	<a href="<%= request.getContextPath()%>/login.jsp">Login</a>
+            	<a href="<%= request.getContextPath()%>/login.jsp">Login&nbsp;</a><span style="display=color:'grey'">|</span><a href="<%= request.getContextPath() %>/signUp.jsp">&nbsp;Registrati</a>
             </c:if> 
             <c:if test="${sessionScope.userInfo != null}">
             	<li><p class="navbar-text">Loggato come:  <strong>${userInfo.username }</strong> (${userInfo.nome } ${userInfo.cognome } - Credito = ${userInfo.credito })
