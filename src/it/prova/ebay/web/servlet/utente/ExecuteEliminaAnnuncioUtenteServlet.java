@@ -38,7 +38,7 @@ public class ExecuteEliminaAnnuncioUtenteServlet extends HttpServlet {
 
 		annuncioService.rimuovi(annuncioService.caricaEager(idAnnuncio));
 
-		response.sendRedirect("/utente/SendRedirectUtenteServlet");
+		response.sendRedirect(request.getContextPath() + "/utente/SendRedirectUtenteServlet");
 
 	}
 

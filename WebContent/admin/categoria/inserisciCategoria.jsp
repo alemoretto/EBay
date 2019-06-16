@@ -6,55 +6,62 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="../../js/validate.js"></script>
 <title>Inserimento Nuova Categoria</title>
 </head>
 <body>
 
 	<div class="container">
 
-		
+
 		<%@ include file="../../header.jsp"%>
 
-		
+
 		<div class="page-header">
 			<h3>Nuova Categoria</h3>
 		</div>
-		
-		<form class="form-horizontal" action="${pageContext.request.contextPath}/admin/categoria/ExecuteInserisciCategoriaServlet" method="post">
+
+		<form class="form-horizontal"
+			action="${pageContext.request.contextPath}/admin/categoria/ExecuteInserisciCategoriaServlet"
+			method="post" onsubmit="return validateCategoria()">
 
 			<div class="form-group">
-		<label class="control-label col-sm-2" for="descrizioneInputId">Descrizione:</label>
-		<c:if test="${messaggiDiErrore.descrizioneInput != null}">
-			<div class="alert alert-danger">
-				${messaggiDiErrore.descrizioneInput}</div>
-		</c:if>
-		<div class="col-sm-4">
-			<input class="form-control" type="text" id="descrizioneInputId"
-				name="descrizioneInput"
-				value="${categoriaDTOAttribute.descrizione}">
-		</div>
-	</div>
+				<label class="control-label col-sm-2" for="descrizioneInputId">Descrizione:</label>
+				<c:if test="${messaggiDiErrore.descrizioneInput != null}">
+					<div class="alert alert-danger">
+						${messaggiDiErrore.descrizioneInput}</div>
+				</c:if>
+				<div class="col-sm-4">
+					<input class="form-control" type="text" id="descrizioneInputId"
+						name="descrizioneInput"
+						value="${categoriaDTOAttribute.descrizione}"
+						onfocus="resetStyle(id)">
+					<div id="descrizioneInputErrorId" style="display: none; color: red"></div>
+				</div>
+			</div>
 
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="codiceInputId">Codice:</label>
-		<c:if test="${messaggiDiErrore.codiceInput != null}">
-			<div class="alert alert-danger">
-				${messaggiDiErrore.codiceInput}</div>
-		</c:if>
-		<div class="col-sm-4">
-			<input class="form-control" type="text" id="codiceInputId"
-				name="codiceInput"
-				value="${categoriaDTOAttribute.codice}">
-		</div>
-	</div>
-<br>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="codiceInputId">Codice:</label>
+				<c:if test="${messaggiDiErrore.codiceInput != null}">
+					<div class="alert alert-danger">
+						${messaggiDiErrore.codiceInput}</div>
+				</c:if>
+				<div class="col-sm-4">
+					<input class="form-control" type="text" id="codiceInputId"
+						name="codiceInput" value="${categoriaDTOAttribute.codice}"
+						onfocus="resetStyle(id)">
+					<div id="codiceInputErrorId" style="display: none; color: red"></div>
+				</div>
+			</div>
+			<br>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-primary btn-md">Inserisci nuova Categoria</button>
+					<button type="submit" class="btn btn-primary btn-md">Inserisci
+						nuova Categoria</button>
 				</div>
 			</div>
 		</form>
-		
+
 
 
 	</div>

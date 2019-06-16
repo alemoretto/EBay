@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import it.prova.ebay.model.Utente;
+import it.prova.ebay.service.categoria.CategoriaService;
 import it.prova.ebay.service.utente.UtenteService;
 
 @WebServlet("/LoginServlet")
@@ -24,6 +25,9 @@ public class LoginServlet extends HttpServlet {
 	@Autowired
 	private UtenteService utenteService;
 
+	@Autowired
+	private CategoriaService categoriaService;
+	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -58,8 +62,9 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session =  request.getSession();
 		session.setAttribute("userInfo", utenteCheAccede);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("cercaAnnuncio.jsp");
-		rd.forward(request, response);
+		request.setAttribute("listaCategorieAttribute", categoriaService.listAll());
+		
+		request.getRequestDispatcher("cercaAnnuncio.jsp").forward(request, response);
 	}
 
 }

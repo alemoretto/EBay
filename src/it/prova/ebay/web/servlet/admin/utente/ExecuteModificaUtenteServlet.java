@@ -1,8 +1,9 @@
 package it.prova.ebay.web.servlet.admin.utente;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,17 +55,30 @@ public class ExecuteModificaUtenteServlet extends HttpServlet {
 			request.setAttribute("utenteDTOAttribute", utenteDTO);
 			request.setAttribute("listRuoliAttribute", ruoloService.listAll());
 			request.setAttribute("messaggiDiErrore", utenteDTO.validate());
-			RequestDispatcher rd = request.getRequestDispatcher("/admin/utente/modificaUtente.jsp");
-			rd.forward(request, response);
+
+			request.getRequestDispatcher("/admin/utente/modificaUtente.jsp").forward(request, response);
+
+			return;
+		}
+
+		Utente utenteOld = utenteService.caricaEager(utenteDTO.getId());
+		if (utenteService.findByUsername(utenteDTO.getUsername()) != null
+				&& !utenteOld.getUsername().equals(utenteDTO.getUsername())) {
+			request.setAttribute("utenteDTOAttribute", utenteDTO);
+			request.setAttribute("listRuoliAttribute", ruoloService.listAll());
+			Map<String, String> validazione = new HashMap<String, String>();
+			validazione.put("usernameInput", "Lo username \"" + utenteDTO.getUsername() + "\" non è disponibile");
+			request.setAttribute("messaggiDiErrore", validazione);
+
+			request.getRequestDispatcher("/admin/utente/inserisciUtente.jsp").forward(request, response);
 
 			return;
 		}
 
 		Utente utenteDaAggiornare = UtenteDTO.buildUtenteInstance(utenteDTO);
-		Utente temp = utenteService.caricaEager(utenteDaAggiornare.getId());
-		utenteDaAggiornare.setDataRegistrazione(temp.getDataRegistrazione());
-		utenteDaAggiornare.setAnnunci(temp.getAnnunci());
-		utenteDaAggiornare.setAcquisti(temp.getAcquisti());
+		utenteDaAggiornare.setDataRegistrazione(utenteOld.getDataRegistrazione());
+		utenteDaAggiornare.setAnnunci(utenteOld.getAnnunci());
+		utenteDaAggiornare.setAcquisti(utenteOld.getAcquisti());
 		utenteService.aggiorna(utenteDaAggiornare);
 
 		response.sendRedirect(request.getContextPath() + "/admin/utente/SendRedirectAdminServlet");

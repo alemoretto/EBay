@@ -2,7 +2,6 @@ package it.prova.ebay.web.servlet.annuncio;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +17,7 @@ import it.prova.ebay.service.categoria.CategoriaService;
 @WebServlet("/home")
 public class PrepareRicercaAnnuncioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     
+
 	@Autowired
 	private CategoriaService categoriaService;
 
@@ -27,20 +26,22 @@ public class PrepareRicercaAnnuncioServlet extends HttpServlet {
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
-	
-    public PrepareRicercaAnnuncioServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setAttribute("listaCategorieAttribute", categoriaService.listAll());
-
-		RequestDispatcher rd = request.getRequestDispatcher("/cercaAnnuncio.jsp");
-		rd.forward(request, response);
+	public PrepareRicercaAnnuncioServlet() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		request.setAttribute("listaCategorieAttribute", categoriaService.listAll());
+
+		request.getRequestDispatcher("/cercaAnnuncio.jsp").forward(request, response);
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 }

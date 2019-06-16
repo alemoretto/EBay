@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="../js/validate.js"></script>
 <title>Modifica Annuncio</title>
 </head>
 <body>
@@ -22,7 +23,7 @@
 
 		<form class="form-horizontal"
 			action="${pageContext.request.contextPath}/utente/ExecuteModificaAnnuncioUtenteServlet"
-			method="post">
+			method="post" onsubmit="return validateAnnuncio()">
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="testoAnnuncioInputId">Descrizione:</label>
@@ -33,7 +34,9 @@
 				<div class="col-sm-8">
 						<input type="hidden" name="idInput" value="${annuncioDTOAttribute.id}">
 					<input class="form-control" type="text" id="testoAnnuncioInputId"
-						name="testoAnnuncioInput"value="${annuncioDTOAttribute.testoAnnuncio}">
+						name="testoAnnuncioInput"value="${annuncioDTOAttribute.testoAnnuncio}" onfocus="resetStyle(id)">
+					<div id="testoAnnuncioInputErrorId" style="display:none;color:red" ></div>
+						
 				</div>
 			</div>
 
@@ -45,7 +48,8 @@
 				</c:if>
 				<div class="col-sm-2">
 					<input class="form-control" type="text" id="prezzoInputId"
-						name="prezzoInput" value="${annuncioDTOAttribute.prezzo}"> 
+						name="prezzoInput" value="${annuncioDTOAttribute.prezzo}" onfocus="resetStyle(id)">
+				<div id="prezzoInputErrorId" style="display:none;color:red" ></div> 						 
 				</div>
 			</div>
 
@@ -61,10 +65,11 @@
 				   		<c:if test="${categ.id == categoriaItem.id}">checked="checked"</c:if>
 					</c:forEach>> 
 					
-<%-- 					<c:if test="${annuncioDTOAttribute.categSelected[loop.index] == 1 }">checked="checked"</c:if> --%>
 					<label class="custom-control-label" for="${categoriaItem.id}">${categoriaItem.descrizione}</label><br>
 				</div>
 			</c:forEach>
+			<div id="categoriaInputErrorId" style="display:none;color:red" ></div>
+			
 			<br>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">

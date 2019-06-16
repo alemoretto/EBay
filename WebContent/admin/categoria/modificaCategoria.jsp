@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="../../js/validate.js"></script>
 <title>Modifica Categoria</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
 			<h3>Modifica Categoria</h3>
 		</div>
 		
-		<form class="form-horizontal" action="${pageContext.request.contextPath}/admin/categoria/ExecuteModificaCategoriaServlet" method="post">
+		<form class="form-horizontal" action="${pageContext.request.contextPath}/admin/categoria/ExecuteModificaCategoriaServlet" method="post" onsubmit="return validateCategoria()">
 
 			<div class="form-group">
 		<label class="control-label col-sm-2" for="descrizioneInputId">Descrizione:</label>
@@ -32,7 +33,8 @@
 		<input type="hidden" name="idInput" value="${categoriaDTOAttribute.id}">
 			<input class="form-control" type="text" id="descrizioneInputId"
 				name="descrizioneInput"
-				value="${categoriaDTOAttribute.descrizione}">
+				value="${categoriaDTOAttribute.descrizione}" onfocus="resetStyle(id)">
+				<div id="descrizioneInputErrorId" style="display: none; color: red"></div>
 		</div>
 	</div>
 
@@ -45,7 +47,8 @@
 		<div class="col-sm-4">
 			<input class="form-control" type="text" id="codiceInputId"
 				name="codiceInput"
-				value="${categoriaDTOAttribute.codice}" readonly="readonly">
+				value="${categoriaDTOAttribute.codice}" readonly="readonly" >
+				<div id="codiceInputErrorId" style="display: none; color: red"></div>
 		</div>
 	</div>
 <br>

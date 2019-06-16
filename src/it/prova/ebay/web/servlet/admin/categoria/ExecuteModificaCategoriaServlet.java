@@ -48,7 +48,7 @@ public class ExecuteModificaCategoriaServlet extends HttpServlet {
 		if (!categoriaDTO.validate().isEmpty()) {
 			request.setAttribute("categoriaDTOAttribute", categoriaDTO);
 			request.setAttribute("messaggiDiErrore", categoriaDTO.validate());
-			request.getRequestDispatcher("/admin/categoria/inserisciCategoria.jsp").forward(request, response);
+			request.getRequestDispatcher("/admin/categoria/modificaCategoria.jsp").forward(request, response);
 
 			return;
 		}
@@ -64,7 +64,7 @@ public class ExecuteModificaCategoriaServlet extends HttpServlet {
 						"Attenzione! Questa descrizione è già associata a un'altra categoria");
 				request.setAttribute("messaggiDiErrore", validazione);
 
-				request.getRequestDispatcher("/admin/categoria/inserisciCategoria.jsp").forward(request, response);
+				request.getRequestDispatcher("/admin/categoria/modificaCategoria.jsp").forward(request, response);
 
 				return;
 			}

@@ -21,9 +21,9 @@
 		<div class="page-header">
 			<h2>Ricerca Annunci</h2>
 		</div>
-		
+
 		<form class="form-horizontal" action="ExecuteRicercaAnnuncioServlet" name="formRicerca"
-			method="post">
+			method="post" >
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="testoAnnuncioInputId">Titolo:</label>
 				<div class="col-sm-8">
@@ -39,7 +39,6 @@
 				</div>
 			</div>
 			<br>
-			
 			<c:forEach items="${listaCategorieAttribute}" var="categoriaItem">
 				<div class="custom-control custom-checkbox">
 					<input id="${categoriaItem.id}" type="checkbox" name="categoriaInput" value="${categoriaItem.id}" class="custom-control-input"> 
@@ -57,8 +56,12 @@
 			</div>
 		</form>
 
+	
+	
+
 	</div>
 	<!-- /.container -->
+
 
 </body>
 </html>

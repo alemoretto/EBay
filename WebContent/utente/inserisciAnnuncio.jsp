@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="../js/validate.js"></script>
 <title>Inserimento Nuovo Annuncio</title>
 </head>
 <body>
@@ -20,19 +21,21 @@
 			<h3>Nuovo Annuncio</h3>
 		</div>
 
-		<form class="form-horizontal"
+		<form class="form-horizontal needs-validation"
 			action="${pageContext.request.contextPath}/utente/ExecuteInserisciAnnuncioUtenteServlet"
-			method="post">
+			method="post" onsubmit="return validateAnnuncio()">
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="testoAnnuncioInputId">Descrizione:</label>
-				<c:if test="${messaggiDiErrore.testoAnnuncioInput != null}">
+			 	<c:if test="${messaggiDiErrore.testoAnnuncioInput != null}">
 					<div class="alert alert-danger">
 						${messaggiDiErrore.testoAnnuncioInput}</div>
-				</c:if>
+				</c:if>  
+
 				<div class="col-sm-8">
 					<input class="form-control" type="text" id="testoAnnuncioInputId"
-						name="testoAnnuncioInput"value="${annuncioDTOAttribute.testoAnnuncio}">
+						name="testoAnnuncioInput" value="${annuncioDTOAttribute.testoAnnuncio}" onfocus="resetStyle(id)" >
+						<div id="testoAnnuncioInputErrorId" style="display:none;color:red" ></div>
 				</div>
 			</div>
 
@@ -42,9 +45,11 @@
 					<div class="alert alert-danger">
 						${messaggiDiErrore.prezzoInput}</div>
 				</c:if>
+
 				<div class="col-sm-2">
 					<input class="form-control" type="text" id="prezzoInputId"
-						name="prezzoInput" value="${annuncioDTOAttribute.prezzo}"> 
+						name="prezzoInput" value="${annuncioDTOAttribute.prezzo}" onfocus="resetStyle(id)">
+						<div id="prezzoInputErrorId" style="display:none;color:red" ></div> 
 				</div>
 			</div>
 
@@ -62,6 +67,7 @@
 					<label class="custom-control-label" for="${categoriaItem.id}">${categoriaItem.descrizione}</label><br>
 				</div>
 			</c:forEach>
+			<div id="categoriaInputErrorId" style="display:none;color:red" ></div>
 			<br>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
@@ -75,6 +81,5 @@
 
 	</div>
 	<!-- /.container -->
-
 </body>
 </html>

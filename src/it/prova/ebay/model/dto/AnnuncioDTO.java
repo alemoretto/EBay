@@ -107,6 +107,9 @@ public class AnnuncioDTO {
 		} else {
 			try {
 				Double.parseDouble(this.prezzo);
+				if (Double.parseDouble(this.prezzo) < 0)
+					validazione.put("prezzoInput", "Attenzione! Il campo Prezzo non è valido");
+
 			} catch (Exception e) {
 				validazione.put("prezzoInput", "Attenzione! Il campo Prezzo non è valido");
 			}
