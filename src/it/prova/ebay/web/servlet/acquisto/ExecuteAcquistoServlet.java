@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import it.prova.ebay.model.Acquisto;
+import it.prova.ebay.model.Annuncio;
 import it.prova.ebay.model.Utente;
 import it.prova.ebay.model.dto.AcquistoDTO;
 import it.prova.ebay.model.dto.AnnuncioDTO;
@@ -50,43 +51,79 @@ public class ExecuteAcquistoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Long idAnnuncio = Long.parseLong(request.getParameter("idAnnuncio"));
-		Utente utenteInSession = (Utente) request.getSession().getAttribute("userInfo");
-		Long idUtente = utenteInSession.getId();
-
 		request.setAttribute("idAnnuncio", request.getParameter("idAnnuncio"));
+		Long idUtenteCompratore = ((Utente) request.getSession().getAttribute("userInfo")).getId();
 
-		if (!acquistoService.acquista(idAnnuncio, idUtente)) {
+		Utente compratore = utenteService.caricaEager(idUtenteCompratore);
+		Annuncio annuncio = annuncioService.caricaEager(idAnnuncio);
+		
+		if ( !annuncio.isAperto() || (compratore.getCredito() < annuncio.getPrezzo()) ) {
 			request.setAttribute("esitoAcquistoBool", false);
 			request.setAttribute("esitoAcquisto", "Non è stato possibile completare l'acquisto  :(  ");
 			request.setAttribute("annuncioAttribute",
 					AnnuncioDTO.buildAnnuncioDTOInstance(annuncioService.caricaEager(idAnnuncio)));
+			
 			request.getRequestDispatcher("/acquisto/confermaAcquisto.jsp").forward(request, response);
 			return;
 		}
-		Utente utenteInPagina = utenteService.caricaEager(utenteInSession.getId());
+		
+		// effettuo acquisto
+		acquistoService.acquista(compratore, annuncio);
 
-		Set<Acquisto> storicoAcquisti = utenteInPagina.getAcquisti();
-
-		List<AcquistoDTO> storicoAcquistiDTO = new ArrayList<>(0);
-		if (storicoAcquisti.size() > 0) {
-			for (Acquisto acq : storicoAcquisti) {
-				storicoAcquistiDTO.add(new AcquistoDTO(acq.getDescrizione(), Double.toString(acq.getPrezzo()),
-						Integer.toString(acq.getAnno())));
-			}
-		}
+	
 		request.setAttribute("esitoAcquistoBool", true);
-		request.setAttribute("storicoDTOAttribute", storicoAcquistiDTO);
+		request.setAttribute("storicoDTOAttribute", AcquistoDTO.buildListaAcquistiDTO(compratore.getAcquisti()));
 		request.setAttribute("esitoAcquisto", "Acquisto completato  :)  ");
 
-		utenteInSession = utenteService.eseguiAccessoEager(utenteInSession.getUsername(),
-				utenteInSession.getPassword());
-		// metto utente in sessione
+		// ricarico utente in sessione per aggiornare il credito visualizzato
+		Utente utenteInSession = utenteService.eseguiAccessoEager(compratore.getUsername(),
+				compratore.getPassword());
 		HttpSession session = request.getSession();
 		session.setAttribute("userInfo", utenteInSession);
 
 		request.getRequestDispatcher("/utente/risultatiStorico.jsp").forward(request, response);
 
 	}
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		Long idAnnuncio = Long.parseLong(request.getParameter("idAnnuncio"));
+//		Utente utenteInSession = (Utente) request.getSession().getAttribute("userInfo");
+//		Long idUtente = utenteInSession.getId();
+//
+//		request.setAttribute("idAnnuncio", request.getParameter("idAnnuncio"));
+//
+//		if (!acquistoService.acquista(idAnnuncio, idUtente)) {
+//			request.setAttribute("esitoAcquistoBool", false);
+//			request.setAttribute("esitoAcquisto", "Non è stato possibile completare l'acquisto  :(  ");
+//			request.setAttribute("annuncioAttribute",
+//					AnnuncioDTO.buildAnnuncioDTOInstance(annuncioService.caricaEager(idAnnuncio)));
+//			request.getRequestDispatcher("/acquisto/confermaAcquisto.jsp").forward(request, response);
+//			return;
+//		}
+//		Utente utenteInPagina = utenteService.caricaEager(utenteInSession.getId());
+//
+//		Set<Acquisto> storicoAcquisti = utenteInPagina.getAcquisti();
+//
+//		List<AcquistoDTO> storicoAcquistiDTO = new ArrayList<>(0);
+//		if (storicoAcquisti.size() > 0) {
+//			for (Acquisto acq : storicoAcquisti) {
+//				storicoAcquistiDTO.add(new AcquistoDTO(acq.getDescrizione(), Double.toString(acq.getPrezzo()),
+//						Integer.toString(acq.getAnno())));
+//			}
+//		}
+//		request.setAttribute("esitoAcquistoBool", true);
+//		request.setAttribute("storicoDTOAttribute", storicoAcquistiDTO);
+//		request.setAttribute("esitoAcquisto", "Acquisto completato  :)  ");
+//
+//		utenteInSession = utenteService.eseguiAccessoEager(utenteInSession.getUsername(),
+//				utenteInSession.getPassword());
+//		// metto utente in sessione
+//		HttpSession session = request.getSession();
+//		session.setAttribute("userInfo", utenteInSession);
+//
+//		request.getRequestDispatcher("/utente/risultatiStorico.jsp").forward(request, response);
+//
+//	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

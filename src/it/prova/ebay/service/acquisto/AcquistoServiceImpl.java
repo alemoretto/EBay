@@ -59,16 +59,9 @@ public class AcquistoServiceImpl implements AcquistoService {
 	}
 	
 	@Transactional
-	public boolean acquista(Long idAnnuncio, Long idUtente) {
+	public boolean acquista(Utente compratore, Annuncio annuncio) {
 		
-		Utente compratore = utenteDAO.getEager(idUtente);
-		Annuncio annuncio = annuncioDAO.getEager(idAnnuncio);
-		
-		if ( !annuncio.isAperto() || !(annuncio.getPrezzo() <= compratore.getCredito()) ) {
-			return false;
-		}
 		Utente venditore = utenteDAO.getEager(annuncio.getUtente().getId());
-
 		
 		double nuovoCreditoCompratore = compratore.getCredito() - annuncio.getPrezzo();
 		compratore.setCredito(nuovoCreditoCompratore);
@@ -90,5 +83,38 @@ public class AcquistoServiceImpl implements AcquistoService {
 		return true;
 		
 	}
+	
+//	@Transactional
+//	public boolean acquista(Long idAnnuncio, Long idUtente) {
+//		
+//		Utente compratore = utenteDAO.getEager(idUtente);
+//		Annuncio annuncio = annuncioDAO.getEager(idAnnuncio);
+//		
+//		if ( !annuncio.isAperto() || !(annuncio.getPrezzo() <= compratore.getCredito()) ) {
+//			return false;
+//		}
+//		Utente venditore = utenteDAO.getEager(annuncio.getUtente().getId());
+//
+//		
+//		double nuovoCreditoCompratore = compratore.getCredito() - annuncio.getPrezzo();
+//		compratore.setCredito(nuovoCreditoCompratore);
+//		double nuovoCreditoVenditore = venditore.getCredito() + annuncio.getPrezzo();
+//		venditore.setCredito(nuovoCreditoVenditore);
+//		
+//		Acquisto nuovoAcquisto = new Acquisto(annuncio.getTestoAnnuncio(),annuncio.getPrezzo(),annuncio.getUtente());
+//		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+//		String dataAcquisto = dateFormat.format(new Date());
+//		nuovoAcquisto.setAnno(Integer.parseInt(dataAcquisto.substring(6, 10)));
+//		compratore.getAcquisti().add(nuovoAcquisto);
+//		nuovoAcquisto.setUtente(compratore);
+//		annuncio.setAperto(false);
+//		
+//		annuncioDAO.update(annuncio);
+//		utenteDAO.update(compratore);
+//		utenteDAO.update(venditore);
+//
+//		return true;
+//		
+//	}
 	
 }
