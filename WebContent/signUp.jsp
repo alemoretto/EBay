@@ -33,7 +33,7 @@
 				</c:if>
 				<div class="col-sm-4">
 					<input class="form-control" type="text" id="nomeInputId"
-						name="nomeInput" value="${utenteDTOAttribute.nome}"
+						name="nomeInput" value="${utenteDTOAttribute.nome}" placeholder="Nome"
 						onfocus="resetStyle(id)">
 					<div id="nomeInputErrorId" style="display: none; color: red"></div>
 
@@ -48,7 +48,7 @@
 				</c:if>
 				<div class="col-sm-4">
 					<input class="form-control" type="text" id="cognomeInputId"
-						name="cognomeInput" value="${utenteDTOAttribute.cognome}"
+						name="cognomeInput" value="${utenteDTOAttribute.cognome}" placeholder="Cognome"
 						onfocus="resetStyle(id)">
 					<div id="cognomeInputErrorId" style="display: none; color: red"></div>
 				</div>
@@ -62,7 +62,7 @@
 				</c:if>
 				<div class="col-sm-4">
 					<input class="form-control" type="text" id="usernameInputId"
-						name="usernameInput" value="${utenteDTOAttribute.username}"
+						name="usernameInput" value="${utenteDTOAttribute.username}" placeholder="Username"
 						onfocus="resetStyle(id)">
 					<div id="usernameInputErrorId" style="display: none; color: red"></div>
 				</div>
@@ -76,7 +76,7 @@
 				</c:if>
 				<div class="col-sm-4">
 					<input class="form-control" type="password" id="passwordInputId"
-						name="passwordInput" 
+						name="passwordInput"  placeholder="Password"
 						onfocus="resetStyle(id)">
 					<div id="passwordInputErrorId" style="display: none; color: red"></div>
 				</div>
@@ -85,7 +85,7 @@
 				<label class="control-label col-sm-2" for="ripetiPasswordInputId">Ripeti Password:</label>
 				<div class="col-sm-4">
 					<input class="form-control" type="password" id="ripetiPasswordInputId"
-						name="ripetiPasswordInput"
+						name="ripetiPasswordInput" placeholder="Ripeti Password"
 						onfocus="resetStyle(id)">
 					<div id="ripetiPasswordInputErrorId" style="display: none; color: red"></div>
 				</div>

@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="prezzoInputId">Prezzo:</label>
+				<label class="control-label col-sm-2" for="prezzoInputId">Prezzo massimo:</label>
 				<div class="col-sm-2">
 					<input class="form-control" type="text" id="prezzoInputId"
 						name="prezzoInput">
