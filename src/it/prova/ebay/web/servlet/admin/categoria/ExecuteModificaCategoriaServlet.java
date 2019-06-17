@@ -84,6 +84,8 @@ public class ExecuteModificaCategoriaServlet extends HttpServlet {
 
 		Categoria categoriaDaInserire = CategoriaDTO.buildCategoriaInstance(categoriaDTO);
 		
+		categoriaDaInserire.setAnnunci(categoriaOLD.getAnnunci());
+		
 		categoriaService.aggiorna(categoriaDaInserire);
 
 		response.sendRedirect(request.getContextPath() + "/admin/categoria/SendRedirectCategoriaServlet");
