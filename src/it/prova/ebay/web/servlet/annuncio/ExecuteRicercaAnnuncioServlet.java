@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,14 +51,14 @@ public class ExecuteRicercaAnnuncioServlet extends HttpServlet {
 		AnnuncioDTO annuncioDTO = new AnnuncioDTO(request.getParameter("testoAnnuncioInput"),
 				request.getParameter("prezzoInput"), request.getParameterValues("categoriaInput"),
 				categoriaService.listAll());
-		if(annuncioDTO.getCategorie().size() == 0)
+		if (annuncioDTO.getCategorie().size() == 0)
 			annuncioDTO.setCategorie(new LinkedHashSet<>(categoriaService.listAll()));
-		
+
 		Annuncio annuncioDaCercare = AnnuncioDTO.buildAnnuncioInstance(annuncioDTO);
 		List<Annuncio> tuttiGliannunci = annuncioService.findByExampleEager(annuncioDaCercare);
 		List<Annuncio> annunciDaMostrare = new ArrayList<Annuncio>(0);
 		Utente utenteLoggato = (Utente) request.getSession().getAttribute("userInfo");
-		if ( utenteLoggato != null ) {
+		if (utenteLoggato != null) {
 			for (Annuncio annuncio : tuttiGliannunci) {
 				if (!annuncio.getUtente().getUsername().equals(utenteLoggato.getUsername())) {
 					annunciDaMostrare.add(annuncio);
@@ -71,7 +70,7 @@ public class ExecuteRicercaAnnuncioServlet extends HttpServlet {
 		request.setAttribute("listaAnnunciAttribute", annunciDaMostrare);
 
 		request.getRequestDispatcher("/risultatiAnnuncio.jsp").forward(request, response);
-		
+
 	}
 
 }
