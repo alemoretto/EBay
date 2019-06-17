@@ -97,7 +97,7 @@ public class AnnuncioDAOImpl implements AnnuncioDAO {
 		 * entityManager.createQuery(query);
 		 */
 
-		String query = "SELECT DISTINCT a FROM Annuncio a LEFT JOIN FETCH  a.categorie c WHERE a.aperto=TRUE AND a.testoAnnuncio LIKE :testo AND c IN (:lista)";
+		String query = "SELECT DISTINCT a FROM Annuncio a LEFT JOIN FETCH a.utente LEFT JOIN FETCH  a.categorie c WHERE a.aperto=TRUE AND a.testoAnnuncio LIKE :testo AND c IN (:lista)";
 
 		if (o.getPrezzo() != -1) {
 			query += " AND a.prezzo < " + Double.toString(o.getPrezzo());

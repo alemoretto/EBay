@@ -1,7 +1,9 @@
 package it.prova.ebay.web.servlet.annuncio;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import it.prova.ebay.model.Annuncio;
+import it.prova.ebay.model.Utente;
 import it.prova.ebay.model.dto.AnnuncioDTO;
 import it.prova.ebay.service.annuncio.AnnuncioService;
 import it.prova.ebay.service.categoria.CategoriaService;
@@ -52,12 +55,23 @@ public class ExecuteRicercaAnnuncioServlet extends HttpServlet {
 		if(annuncioDTO.getCategorie().size() == 0)
 			annuncioDTO.setCategorie(new LinkedHashSet<>(categoriaService.listAll()));
 		
-		Annuncio annuncio = AnnuncioDTO.buildAnnuncioInstance(annuncioDTO);
+		Annuncio annuncioDaCercare = AnnuncioDTO.buildAnnuncioInstance(annuncioDTO);
+		List<Annuncio> tuttiGliannunci = annuncioService.findByExampleEager(annuncioDaCercare);
+		List<Annuncio> annunciDaMostrare = new ArrayList<Annuncio>(0);
+		Utente utenteLoggato = (Utente) request.getSession().getAttribute("userInfo");
+		if ( utenteLoggato != null ) {
+			for (Annuncio annuncio : tuttiGliannunci) {
+				if (!annuncio.getUtente().getUsername().equals(utenteLoggato.getUsername())) {
+					annunciDaMostrare.add(annuncio);
+				}
+			}
+		} else {
+			annunciDaMostrare = tuttiGliannunci;
+		}
+		request.setAttribute("listaAnnunciAttribute", annunciDaMostrare);
 
-		request.setAttribute("listaAnnunciAttribute", annuncioService.findByExampleEager(annuncio));
-
-		RequestDispatcher rd = request.getRequestDispatcher("/risultatiAnnuncio.jsp");
-		rd.forward(request, response);
+		request.getRequestDispatcher("/risultatiAnnuncio.jsp").forward(request, response);
+		
 	}
 
 }
